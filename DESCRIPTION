@@ -1,0 +1,16 @@
+Package: lcca
+Type: Package
+Title: What the Package Does (Title Case)
+Version: 0.1.0
+Author: Who wrote it
+Maintainer: Seonjoo Lee <seonjoo.lee@nyspi.columbia.edu>
+Description: Conduct longitudinal cannonical correlation analysis
+License: What license is it under?
+Encoding: UTF-8
+LazyData: true
+Imports:
+    CCA,
+    MASS
+Suggests:
+    dplyr
+RoxygenNote: 7.0.0
