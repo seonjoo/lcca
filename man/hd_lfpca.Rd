@@ -14,7 +14,7 @@ hd_lfpca(
   prefix = date(),
   Nx = NA,
   Nw = NA,
-  varthresh = 0.99,
+  varthresh = 0.95,
   projectthresh = 1,
   timeadjust = FALSE,
   figure = FALSE
