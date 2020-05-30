@@ -88,70 +88,55 @@ sim_lcca <- function(I, r){
   return(out)
 }
 
+## ----------------------------------------------------------------------------
+
 get_bias = function(estimate, truth) {
   mean(estimate) - truth
 }
 
+## ----------------------------------------------------------------------------
+
 ## I=50, r=0.8
 sim11 <- sim_lcca(I=50, r=0.8)
-get_bias(mean(sim11$ccor.list), 0.8)
-
 ## I=50, r=0.5
 sim12 <- sim_lcca(I=50, r=0.5)
-get_bias(mean(sim12$ccor.list), 0.5)
-
 ## I=50, r=0.3
 sim13 <- sim_lcca(I=50, r=0.3)
-get_bias(mean(sim13$ccor.list), 0.3)
-
 ## I=50, r=0.1
 sim14 <- sim_lcca(I=50, r=0.1)
-get_bias(mean(sim14$ccor.list), 0.1)
 
 
 ## I=100, r=0.8
 sim15 <- sim_lcca(I=100, r=0.8)
-get_bias(mean(sim15$ccor.list), 0.8)
 ## I=100, r=0.5
 sim16 <- sim_lcca(I=100, r=0.5)
-get_bias(mean(sim16$ccor.list), 0.5)
 ## I=100, r=0.3
 sim17 <- sim_lcca(I=100, r=0.3)
-get_bias(mean(sim17$ccor.list), 0.3)
 ## I=100, r=0.1
 sim18 <- sim_lcca(I=100, r=0.1)
-get_bias(mean(sim18$ccor.list), 0.1)
 
 
 ## I=200, r=0.8
 sim19 <- sim_lcca(I=200, r=0.8)
-get_bias(mean(sim19$ccor.list), 0.8)
 ## I=200, r=0.5
 sim110 <- sim_lcca(I=200, r=0.5)
-get_bias(mean(sim110$ccor.list), 0.5)
 ## I=200, r=0.3
 sim111 <- sim_lcca(I=200, r=0.3)
-get_bias(mean(sim111$ccor.list), 0.3)
 ## I=200, r=0.1
 sim112 <- sim_lcca(I=200, r=0.1)
-get_bias(mean(sim112$ccor.list), 0.1)
 
 
 ## I=400, r=0.8
 sim113 <- sim_lcca(I=400, r=0.8)
-get_bias(mean(sim113$ccor.list), 0.8)
 ## I=400, r=0.5
 sim114 <- sim_lcca(I=400, r=0.5)
-get_bias(mean(sim114$ccor.list), 0.5)
 ## I=400, r=0.3
 sim115 <- sim_lcca(I=400, r=0.3)
-get_bias(mean(sim115$ccor.list), 0.3)
 ## I=400, r=0.1
 sim116 <- sim_lcca(I=400, r=0.1)
-get_bias(mean(sim116$ccor.list), 0.1)
 
-
-
+## ----------------------------------------------------------------------------
+# Canonical Correlations
 dd <- data.frame(ccors = c(sim11$ccor.list, sim12$ccor.list, sim13$ccor.list, sim14$ccor.list,
                            sim15$ccor.list, sim16$ccor.list, sim17$ccor.list, sim18$ccor.list,
                            sim19$ccor.list, sim110$ccor.list, sim111$ccor.list, sim112$ccor.list,
@@ -173,7 +158,8 @@ ggplot(dd , aes(x=r, y=ccors)) +
         axis.text.x=element_text(size = 11)) +
   facet_grid(. ~ i)
 
-
+## ----------------------------------------------------------------------------
+# CV X intercept
 dd <- data.frame(cv_x0 = c(sim11$cv_x0s, sim12$cv_x0s, sim13$cv_x0s, sim14$cv_x0s,
                            sim15$cv_x0s, sim16$cv_x0s, sim17$cv_x0s, sim18$cv_x0s,
                            sim19$cv_x0s, sim110$cv_x0s, sim111$cv_x0s, sim112$cv_x0s,
@@ -194,6 +180,9 @@ ggplot(dd , aes(x=r, y=cv_x0)) +
         axis.title = element_text(face="bold"),
         axis.text.x=element_text(size = 11)) +
   facet_grid(. ~ i)
+
+## ----------------------------------------------------------------------------
+# CV X slope
 
 dd <- data.frame(cv_x1 = c(sim11$cv_x1s, sim12$cv_x1s, sim13$cv_x1s, sim14$cv_x1s,
                            sim15$cv_x1s, sim16$cv_x1s, sim17$cv_x1s, sim18$cv_x1s,
@@ -217,6 +206,8 @@ ggplot(dd , aes(x=r, y=cv_x1)) +
   facet_grid(. ~ i)
 
 
+## ----------------------------------------------------------------------------
+# CV Y intercept
 
 dd <- data.frame(cv_y0 = c(sim11$cv_y0s, sim12$cv_y0s, sim13$cv_y0s, sim14$cv_y0s,
                            sim15$cv_y0s, sim16$cv_y0s, sim17$cv_y0s, sim18$cv_y0s,
@@ -238,6 +229,10 @@ ggplot(dd , aes(x=r, y=cv_y0)) +
         axis.title = element_text(face="bold"),
         axis.text.x=element_text(size = 11)) +
   facet_grid(. ~ i)
+
+
+## ----------------------------------------------------------------------------
+# CV Y slope
 
 dd <- data.frame(cv_y1 = c(sim11$cv_y1s, sim12$cv_y1s, sim13$cv_y1s, sim14$cv_y1s,
                            sim15$cv_y1s, sim16$cv_y1s, sim17$cv_y1s, sim18$cv_y1s,
