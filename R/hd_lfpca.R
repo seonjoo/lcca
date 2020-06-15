@@ -62,7 +62,7 @@ hd_lfpca= function(Y,T,J,I,visit, verbose=1, prefix=date(), Nx = NA,Nw = NA,
 	### Y = [Y1 Y2... YI] = VDU' (p by J matrix)
 	### Calcuate U using iterative calculation of sum(Yi'Yi)
 #	Y_total_mean=apply(Y,1,mean)
-	Y = t(scale(t(Y),center=TRUE,scale=FALSE)) # Y is centered.
+	Y = round(t(scale(t(Y),center=TRUE,scale=FALSE)), digit=5) # Y is centered.
 
 	if (dim(Y)[1]>=dim(Y)[2]){
 	  svdy = svd(t(Y)%*%Y) # There is a sign ambiguity between SVD and eigen function.
