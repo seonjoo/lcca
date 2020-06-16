@@ -53,7 +53,7 @@
 #' @export
 
 hd_lfpca= function(Y,T,J,I,visit, verbose=FALSE, prefix=date(), Nx = NA,Nw = NA,
-                   varthresh=0.95,projectthresh=1, timeadjust=FALSE,figure=FALSE){
+                   varthresh=0.95,projectthresh=1, timeadjust=FALSE){
  # library(MASS)
   	#J: Total number visits out of all subjects (sum of visit)
 	#T must be centered+scaled time information
@@ -167,23 +167,23 @@ phix=rbind(phix0,phix1)
 total_lambda=sum(Ax$values[1:Nx])+sum(Aw$values[1:Nw])
 a=(diag(t(phix0) %*% phix0))
 
-if (figure==TRUE){
-  x =cbind(Baseline=Ax$values[1:Nx]/total_lambda*a*100,Longitudinal=Ax$values[1:Nx]/total_lambda*(1-a)*100)
-  maxval=max(apply(x,1,sum))
-
-  if(Nx<15){
-    h=barplot(t(x[1:Nx,]),border=b[c(100,170)], beside=FALSE,col=b[c(100,170)],names.arg=1:Nx,legend=TRUE,ylim=c(0,1.1*maxval))
-    title("Variability Explained by subject-specific components")
-    text(h[1:Nx],Ax$values[1:Nx]/total_lambda*100+0.06*maxval,paste(round(Ax$values[1:Nx]/total_lambda*10000)/100, '%',sep=""))
-    text(h[1:Nx],Ax$values[1:Nx]/total_lambda*100+0.02*maxval,paste("(",round((1-a[1:Nx])*10000)/100, '%)',sep=""))
-    }
-  if(Nx>=15){
-    h=barplot(t(x[1:15,]),border=b[c(100,170)], beside=FALSE,col=b[c(100,170)],names.arg=1:15,legend=TRUE,ylim=c(0,1.1*maxval))
-    title("Variability Explained by First 15 Eigenvectors - subject-specific variation")
-    text(h[1:15],Ax$values[1:15]/total_lambda*100+0.06*maxval,paste(round(Ax$values[1:15]/total_lambda*10000)/100, '%',sep=""))
-    text(h[1:15],Ax$values[1:15]/total_lambda*100+0.02*maxval,paste("(",round((1-a[1:15])*10000)/100, '%)',sep=""))
-  }
-}
+# if (figure==TRUE){
+#   x =cbind(Baseline=Ax$values[1:Nx]/total_lambda*a*100,Longitudinal=Ax$values[1:Nx]/total_lambda*(1-a)*100)
+#   maxval=max(apply(x,1,sum))
+#
+#   # if(Nx<15){
+#   #   h=barplot(t(x[1:Nx,]),border=b[c(100,170)], beside=FALSE,col=b[c(100,170)],names.arg=1:Nx,legend=TRUE,ylim=c(0,1.1*maxval))
+#   #   title("Variability Explained by subject-specific components")
+#   #   text(h[1:Nx],Ax$values[1:Nx]/total_lambda*100+0.06*maxval,paste(round(Ax$values[1:Nx]/total_lambda*10000)/100, '%',sep=""))
+#   #   text(h[1:Nx],Ax$values[1:Nx]/total_lambda*100+0.02*maxval,paste("(",round((1-a[1:Nx])*10000)/100, '%)',sep=""))
+#   #   }
+#   # if(Nx>=15){
+#   #   h=barplot(t(x[1:15,]),border=b[c(100,170)], beside=FALSE,col=b[c(100,170)],names.arg=1:15,legend=TRUE,ylim=c(0,1.1*maxval))
+#   #   title("Variability Explained by First 15 Eigenvectors - subject-specific variation")
+#   #   text(h[1:15],Ax$values[1:15]/total_lambda*100+0.06*maxval,paste(round(Ax$values[1:15]/total_lambda*10000)/100, '%',sep=""))
+#   #   text(h[1:15],Ax$values[1:15]/total_lambda*100+0.02*maxval,paste("(",round((1-a[1:15])*10000)/100, '%)',sep=""))
+#   # }
+# }
 
 #par(mfrow=c(2,5))
 #for (j in 1:5){image(matrix(phix0[,j],200,200),breaks=-120:120/2000,col=colscheme,)}
