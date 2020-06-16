@@ -52,7 +52,7 @@
 #' @import MASS
 #' @export
 
-hd_lfpca= function(Y,T,J,I,visit, verbose=1, prefix=date(), Nx = NA,Nw = NA,
+hd_lfpca= function(Y,T,J,I,visit, verbose=FALSE, prefix=date(), Nx = NA,Nw = NA,
                    varthresh=0.95,projectthresh=1, timeadjust=FALSE,figure=FALSE){
  # library(MASS)
   	#J: Total number visits out of all subjects (sum of visit)
