@@ -171,12 +171,14 @@ if (figure==TRUE){
   x =cbind(Baseline=Ax$values[1:Nx]/total_lambda*a*100,Longitudinal=Ax$values[1:Nx]/total_lambda*(1-a)*100)
   maxval=max(apply(x,1,sum))
 
-  if(Nx<15){h=barplot(t(x[1:Nx,]),border=b[c(100,170)], beside=FALSE,col=b[c(100,170)],names.arg=1:Nx,legend=TRUE,ylim=c(0,1.1*maxval))
+  if(Nx<15){
+    h=barplot(t(x[1:Nx,]),border=b[c(100,170)], beside=FALSE,col=b[c(100,170)],names.arg=1:Nx,legend=TRUE,ylim=c(0,1.1*maxval))
     title("Variability Explained by subject-specific components")
     text(h[1:Nx],Ax$values[1:Nx]/total_lambda*100+0.06*maxval,paste(round(Ax$values[1:Nx]/total_lambda*10000)/100, '%',sep=""))
     text(h[1:Nx],Ax$values[1:Nx]/total_lambda*100+0.02*maxval,paste("(",round((1-a[1:Nx])*10000)/100, '%)',sep=""))
-}
-if(Nx>=15){h=barplot(t(x[1:15,]),border=b[c(100,170)], beside=FALSE,col=b[c(100,170)],names.arg=1:15,legend=TRUE,ylim=c(0,1.1*maxval))
+    }
+  if(Nx>=15){
+    h=barplot(t(x[1:15,]),border=b[c(100,170)], beside=FALSE,col=b[c(100,170)],names.arg=1:15,legend=TRUE,ylim=c(0,1.1*maxval))
     title("Variability Explained by First 15 Eigenvectors - subject-specific variation")
     text(h[1:15],Ax$values[1:15]/total_lambda*100+0.06*maxval,paste(round(Ax$values[1:15]/total_lambda*10000)/100, '%',sep=""))
     text(h[1:15],Ax$values[1:15]/total_lambda*100+0.02*maxval,paste("(",round((1-a[1:15])*10000)/100, '%)',sep=""))
