@@ -90,7 +90,7 @@ hd_lfpca= function(Y,T,J,I,visit, verbose=FALSE, prefix=date(), Nx = NA,Nw = NA,
 	}
 
 
-print("hi")
+#print("hi")
 	Yvec=matrix(0,J_projected^2,sum(visit^2))
 	X=matrix(0,sum(visit^2),5)
 	k=0
