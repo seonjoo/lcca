@@ -2,7 +2,7 @@
 #'
 #'
 #' For V-by-J dimensioanl matrix of Y, HDLPCA first reduce the dimension of p to J if V>J:
-#' Y = UDV. Then, longitudinal PCA is applied to the projected scores of Y on the p-dimensional subspace: \tilde{Y}=DY.
+#' Y = UDV. Then, longitudinal PCA is applied to the projected scores of Y on the p-dimensional subspace: Y*=DY.
 #' The dimension of the subspace is selected based on the variance explained by first p-components.
 #' The default value is projectthresh=1.
 #'
