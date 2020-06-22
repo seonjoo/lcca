@@ -2,7 +2,7 @@
 #'
 #'
 #' For V-by-J dimensioanl matrix of Y, HDLPCA first reduce the dimension of p to J if V>J:
-#' Y = UDV. Then, longitudinal PCA is applied to the projected scores of Y on the p-dimensional subspace: \tilde{Y}=DY.
+#' Y = UDV. Then, longitudinal PCA is applied to the projected scores of Y on the p-dimensional subspace: Y*=DY.
 #' The dimension of the subspace is selected based on the variance explained by first p-components.
 #' The default value is projectthresh=1.
 #'
@@ -52,8 +52,8 @@
 #' @import MASS
 #' @export
 
-hd_lfpca= function(Y,T,J,I,visit, verbose=1, prefix=date(), Nx = NA,Nw = NA,
-                   varthresh=0.95,projectthresh=1, timeadjust=FALSE,figure=FALSE){
+hd_lfpca= function(Y,T,J,I,visit, verbose=FALSE, prefix=date(), Nx = NA,Nw = NA,
+                   varthresh=0.95,projectthresh=1, timeadjust=FALSE){
  # library(MASS)
   	#J: Total number visits out of all subjects (sum of visit)
 	#T must be centered+scaled time information
@@ -66,9 +66,9 @@ hd_lfpca= function(Y,T,J,I,visit, verbose=1, prefix=date(), Nx = NA,Nw = NA,
 
 	if (dim(Y)[1]>=dim(Y)[2]){
 	  svdy = svd(t(Y)%*%Y) # There is a sign ambiguity between SVD and eigen function.
-	  print("Reduce Dimension")
+	  if(verbose==TRUE){print("Reduce Dimension")}
 	  N=J_projected=sum(cumsum(svdy$d^2)/sum(svdy$d^2)<projectthresh) #Dimensionality #
-	  print(J_projected)
+	  if(verbose==TRUE){print(J_projected)}
 	  U = svdy$v[,1:J_projected]
 	  D = diag(sqrt(svdy$d[1:J_projected]))
 	  S = diag(svdy$d[1:J_projected])
@@ -78,9 +78,9 @@ hd_lfpca= function(Y,T,J,I,visit, verbose=1, prefix=date(), Nx = NA,Nw = NA,
   	rm(list=c("svdy"))
 	}else{
 	  svdy = svd(t(Y)%*%Y) # There is a sign ambiguity between SVD and eigen function.
-	  print("Do not Reduce Dimension")
+	  if(verbose==TRUE){print("Do not Reduce Dimension")}
 	  N=J_projected=nrow(Y)-1#sum(cumsum(svdy$d^2)/sum(svdy$d^2)<projectthresh) #Dimensionality #
-	  print(J_projected)
+	  if(verbose==TRUE){print(J_projected)}
 	  U = svdy$v[,1:J_projected]
 	  D = diag(sqrt(svdy$d[1:J_projected]))
 	  S = diag(svdy$d[1:J_projected])
@@ -90,7 +90,7 @@ hd_lfpca= function(Y,T,J,I,visit, verbose=1, prefix=date(), Nx = NA,Nw = NA,
 	}
 
 
-print("hi")
+#print("hi")
 	Yvec=matrix(0,J_projected^2,sum(visit^2))
 	X=matrix(0,sum(visit^2),5)
 	k=0
@@ -117,7 +117,7 @@ print("hi")
     J_sq = J_sq + Ji^2;
 		k = k + Ji;
 	}
-print("Estimate Covariance Functions")
+	if(verbose==TRUE){print("Estimate Covariance Functions")}
 
 #system.time(beta<- Yvec %*% X %*% chol2inv(chol(t(X)%*%X)))
 beta <- Yvec %*% X %*%solve(t(X)%*%X)
@@ -140,7 +140,7 @@ if (is.na(Nx) | is.na(Nw)){
 		lim=(sum(Ax$values[1:Nx])+sum(Aw$values[1:Nw]))/(sum(Ax$values[1:sum(Ax$values>0)])+sum(Aw$values[1:sum(Aw$values>0)]));
 		Nx0<-Nx;Nw0<-Nw
 #	if (lim>varthresh){Nx=Nx-1;Nw=Nw-1}
-		print(c(Nx,Nw,lim))
+		if(verbose==TRUE){print(c(Nx,Nw,lim))}
 }
 }
 Ax0 =  Ax$vectors[1:J_projected,1:Nx]
@@ -167,21 +167,23 @@ phix=rbind(phix0,phix1)
 total_lambda=sum(Ax$values[1:Nx])+sum(Aw$values[1:Nw])
 a=(diag(t(phix0) %*% phix0))
 
-if (figure==TRUE){
-  x =cbind(Baseline=Ax$values[1:Nx]/total_lambda*a*100,Longitudinal=Ax$values[1:Nx]/total_lambda*(1-a)*100)
-  maxval=max(apply(x,1,sum))
-
-  if(Nx<15){h=barplot(t(x[1:Nx,]),border=b[c(100,170)], beside=FALSE,col=b[c(100,170)],names.arg=1:Nx,legend=TRUE,ylim=c(0,1.1*maxval))
-    title("Variability Explained by subject-specific components")
-    text(h[1:Nx],Ax$values[1:Nx]/total_lambda*100+0.06*maxval,paste(round(Ax$values[1:Nx]/total_lambda*10000)/100, '%',sep=""))
-    text(h[1:Nx],Ax$values[1:Nx]/total_lambda*100+0.02*maxval,paste("(",round((1-a[1:Nx])*10000)/100, '%)',sep=""))
-}
-if(Nx>=15){h=barplot(t(x[1:15,]),border=b[c(100,170)], beside=FALSE,col=b[c(100,170)],names.arg=1:15,legend=TRUE,ylim=c(0,1.1*maxval))
-    title("Variability Explained by First 15 Eigenvectors - subject-specific variation")
-    text(h[1:15],Ax$values[1:15]/total_lambda*100+0.06*maxval,paste(round(Ax$values[1:15]/total_lambda*10000)/100, '%',sep=""))
-    text(h[1:15],Ax$values[1:15]/total_lambda*100+0.02*maxval,paste("(",round((1-a[1:15])*10000)/100, '%)',sep=""))
-  }
-}
+# if (figure==TRUE){
+#   x =cbind(Baseline=Ax$values[1:Nx]/total_lambda*a*100,Longitudinal=Ax$values[1:Nx]/total_lambda*(1-a)*100)
+#   maxval=max(apply(x,1,sum))
+#
+#   # if(Nx<15){
+#   #   h=barplot(t(x[1:Nx,]),border=b[c(100,170)], beside=FALSE,col=b[c(100,170)],names.arg=1:Nx,legend=TRUE,ylim=c(0,1.1*maxval))
+#   #   title("Variability Explained by subject-specific components")
+#   #   text(h[1:Nx],Ax$values[1:Nx]/total_lambda*100+0.06*maxval,paste(round(Ax$values[1:Nx]/total_lambda*10000)/100, '%',sep=""))
+#   #   text(h[1:Nx],Ax$values[1:Nx]/total_lambda*100+0.02*maxval,paste("(",round((1-a[1:Nx])*10000)/100, '%)',sep=""))
+#   #   }
+#   # if(Nx>=15){
+#   #   h=barplot(t(x[1:15,]),border=b[c(100,170)], beside=FALSE,col=b[c(100,170)],names.arg=1:15,legend=TRUE,ylim=c(0,1.1*maxval))
+#   #   title("Variability Explained by First 15 Eigenvectors - subject-specific variation")
+#   #   text(h[1:15],Ax$values[1:15]/total_lambda*100+0.06*maxval,paste(round(Ax$values[1:15]/total_lambda*10000)/100, '%',sep=""))
+#   #   text(h[1:15],Ax$values[1:15]/total_lambda*100+0.02*maxval,paste("(",round((1-a[1:15])*10000)/100, '%)',sep=""))
+#   # }
+# }
 
 #par(mfrow=c(2,5))
 #for (j in 1:5){image(matrix(phix0[,j],200,200),breaks=-120:120/2000,col=colscheme,)}
@@ -199,7 +201,7 @@ if(Nx>=15){h=barplot(t(x[1:15,]),border=b[c(100,170)], beside=FALSE,col=b[c(100,
 
     C0W = t(Ax0)%*%Au;
     C1W = t(Ax1)%*%Au;
- print("Calcuate Scores")
+    if(verbose==TRUE){print("Calcuate Scores")}
     Ut = t(U);
     k = 0;
      for (i in 1:I){
@@ -241,7 +243,7 @@ if(Nx>=15){h=barplot(t(x[1:15,]),border=b[c(100,170)], beside=FALSE,col=b[c(100,
     }
 
 
-print("Compute Residual to the Demeaned Data.")
+    if(verbose==TRUE){print("Compute Residual to the Demeaned Data.")}
 	tmpx=matrix(0,nrow(Ax0),J)
 	cumvisit=0
 	for (j in 1:I){
@@ -249,20 +251,19 @@ print("Compute Residual to the Demeaned Data.")
 		cumvisit=sum(visit[1:j])
 	}
 	residual=sum((Ynew-tmpx-Aw$vectors[,1:Nw]%*%zeta_est)^2)
-print(paste("Residual of LFPCA Model is:",residual))
-	result = new.env()
-	result$xi=xi_est
-	result$zeta=zeta_est
-	result$phix0=phix0
-	result$phix1=phix1
-	result$Nx=Nx
-	result$Nw=Nw
-	result$phiw=phiw
-	result$sx=Ax$values[1:Nx]
-	result$sw=Aw$values[1:Nw]
-	result$residual=residual
-	result$tij=T
-	result=as.list(result)
+	if(verbose==TRUE){print(paste("Residual of LFPCA Model is:",residual))}
+	result = list(
+	  xi=xi_est,
+	  zeta=zeta_est,
+	  phix0=phix0,
+	  phix1=phix1,
+	  Nx=Nx,
+	  Nw=Nw,
+	  phiw=phiw,
+	  sx=Ax$values[1:Nx],
+	  sw=Aw$values[1:Nw],
+	  residual=residual,
+	  tij=T)
 	return(result)
 }
 

@@ -20,13 +20,13 @@ lcca.linear(x, y, varthresh = 0.95, projectthresh = 1, method = "Wilks")
 \value{
 ccor
 
-xcoef_x0: Canonical variable for the intercept for x
+xcv_x0: Canonical variable for the intercept for x
 
-xcoef_x1: Canonical variable for the slope for x
+xcv_x1: Canonical variable for the slope for x
 
-xcoef_y0: Canonical variable for the intercept for y
+xcv_y0: Canonical variable for the intercept for y
 
-xcoef_y1: Canonical variable for the slope for y
+xcv_y1: Canonical variable for the slope for y
 }
 \description{
 Current version is implemented for only the linear trajectory.
