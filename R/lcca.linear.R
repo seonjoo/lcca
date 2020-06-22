@@ -72,10 +72,10 @@ lcca.linear<-function(x,y,
   tests = p.asym(rho = cca$cor, N = x$I,p = re.X$Nx,q = re.Y$Nx , tstat = method)
   ccor.dim=sum(tests$p.value<0.05)
   ccor=cca$cor[1:ccor.dim]
-    xcv_x0 = re.X$phix0 %*% cca$scores$corr.X.xscores[,1:ccor.dim]
-    xcv_x1 = re.X$phix1 %*% cca$scores$corr.X.xscores[,1:ccor.dim]
-    xcv_y0 = re.Y$phix0 %*% cca$scores$corr.Y.yscores[,1:ccor.dim]
-    xcv_y1 = re.Y$phix1 %*% cca$scores$corr.Y.yscores[,1:ccor.dim]
+    xcv_x0 = re.X$phix0 %*% cca$xcoef[,1:ccor.dim]
+    xcv_x1 = re.X$phix1 %*% cca$xcoef[,1:ccor.dim]
+    xcv_y0 = re.Y$phix0 %*% cca$ycoef[,1:ccor.dim]
+    xcv_y1 = re.Y$phix1 %*% cca$ycoef[,1:ccor.dim]
     scores=list(x=cca$scores$xscores[,1:ccor.dim],y= cca$scores$yscores[,1:ccor.dim])
 
     out=list(tests=tests, ccor.dim=ccor.dim, ccor=ccor,
