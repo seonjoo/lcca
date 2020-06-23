@@ -10,14 +10,13 @@ hd_lfpca(
   J,
   I,
   visit,
-  verbose = 1,
+  verbose = FALSE,
   prefix = date(),
   Nx = NA,
   Nw = NA,
   varthresh = 0.95,
   projectthresh = 1,
-  timeadjust = FALSE,
-  figure = FALSE
+  timeadjust = FALSE
 )
 }
 \arguments{

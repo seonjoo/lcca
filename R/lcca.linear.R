@@ -70,6 +70,7 @@ lcca.linear<-function(x,y,
 
   cca = cc(t(re.X$xi), t(re.Y$xi))
   tests = p.asym(rho = cca$cor, N = x$I,p = re.X$Nx,q = re.Y$Nx , tstat = method)
+  tests$r = cca$cor
   ccor.dim=sum(tests$p.value<0.05)
   ccor=cca$cor[1:ccor.dim]
     xcv_x0 = re.X$phix0 %*% cca$xcoef[,1:ccor.dim]
