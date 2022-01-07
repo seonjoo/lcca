@@ -8,6 +8,7 @@
 #' @param projectthresh (default=1) threshold for the dimension reduction projection in lfpca.
 #' @param timeadjust (defult=FALSE)
 #' @param method (defualt='Wilks') test statistic to be used. "Wilks","Hotelling", "Pillai", or "Roy".
+#' @param verbose (default=FALSE) print all details
 #' @return ccor
 #' @return xcv_x0: Canonical variable for the intercept for x
 #' @return xcv_x1: Canonical variable for the slope for x
@@ -62,11 +63,12 @@
 lcca.linear<-function(x,y,
                varthresh=0.95,
                projectthresh=1,
-               method='Wilks'){
+               method='Wilks',
+               verbose=FALSE){
 
-  re.X <- hd_lfpca(x$X, T=x$time, J=sum(x$visit), I=x$I, visit=x$visit, varthresh=varthresh, projectthresh=projectthresh, timeadjust=FALSE)
+  re.X <- hd_lfpca(x$X, T=x$time, J=sum(x$visit), I=x$I, visit=x$visit, varthresh=varthresh, projectthresh=projectthresh, timeadjust=FALSE,verbose=verbose)
 
-  re.Y <- hd_lfpca(y$X, T=y$time, J=y$J, I=y$I, visit=y$visit, varthresh=varthresh, projectthresh=projectthresh, timeadjust=FALSE)
+  re.Y <- hd_lfpca(y$X, T=y$time, J=y$J, I=y$I, visit=y$visit, varthresh=varthresh, projectthresh=projectthresh, timeadjust=FALSE,verbose=verbose)
 
   cca = cc(t(re.X$xi), t(re.Y$xi))
   tests = p.asym(rho = cca$cor, N = x$I,p = re.X$Nx,q = re.Y$Nx , tstat = method)

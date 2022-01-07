@@ -13,7 +13,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## R Markdown
 
-```{r}
+```{r, message=FALSE}
 library(lcca)
 library(MASS)
 ```
