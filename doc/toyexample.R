@@ -1,7 +1,7 @@
 ## ----setup, include=FALSE-----------------------------------------------------
 knitr::opts_chunk$set(echo = TRUE)
 
-## -----------------------------------------------------------------------------
+## ---- message=FALSE-----------------------------------------------------------
 library(lcca)
 library(MASS)
 
@@ -45,9 +45,23 @@ xi.Y = xi[,4:6]
 Y = phiy0 %*% t(xi.Y[rep(1:I, visit.Y),]) + phiy1 %*% t(time.Y * xi.Y[rep(1:I, visit.Y),]) + phiyw %*% t(zeta.Y) + matrix(rnorm(V.y*K.Y ,0, .1), V.y, K.Y)
 
 ## -----------------------------------------------------------------------------
-
 x = list(X=X, time=time.X, I=I, J=sum(visit.X),visit=visit.X)
 y = list(X=Y, time=time.Y, I=I, J=sum(visit.Y),visit=visit.Y)
 
+## -----------------------------------------------------------------------------
 re = lcca.linear(x=x,y=y)
+
+## ---- fig.width=6, fig.height=6-----------------------------------------------
+library(gplots)
+time=c(0,1,2,3,4)
+
+
+matx = (re$xcv_x0 %*% t(rep(1,length(time)))+ re$xcv_x1 %*% t(matrix(time)));colnames(matx)<-time
+maty = (re$xcv_y0 %*% t(rep(1,length(time)))+ re$xcv_y1 %*% t(matrix(time)));colnames(maty)<-time
+
+par(mfrow=c(1,2), mar=c(2,1,1,1))
+image(t(matx),  xaxt='n',  yaxt='n', main='LCV X',col=bluered(200),breaks=c(-100:100)/100*0.7)
+mtext(time, side=1, line=0, at=time/4);mtext('Time', side=1, line=1, at=0.5)
+image(t(maty),  xaxt='n',  yaxt='n', main='LCV Y',col=bluered(200),breaks=c(-100:100)/100*0.7)
+mtext(time, side=1, line=0, at=time/4);mtext('Time', side=1, line=1, at=0.5)
 

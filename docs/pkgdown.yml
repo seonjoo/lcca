@@ -1,6 +1,7 @@
-pandoc: 2.1.1
-pkgdown: 1.4.1
+pandoc: 2.14.0.3
+pkgdown: 2.0.1
 pkgdown_sha: ~
 articles:
   toyexample: toyexample.html
+last_built: 2022-01-07T19:26Z
 
