@@ -2,7 +2,7 @@
 title: "Toy Example for LCCA"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Put the title of your vignette here}
+  %\VignetteIndexEntry{LCCA Example}
   %\VignetteEngine{knitr::rmarkdown}
   \usepackage[utf8]{inputenc}
 ---
