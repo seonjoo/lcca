@@ -10,10 +10,10 @@
 #' @param method (defualt='Wilks') test statistic to be used. "Wilks","Hotelling", "Pillai", or "Roy".
 #' @param verbose (default=FALSE) print all details
 #' @return ccor
-#' @return xcv_x0: Canonical variable for the intercept for x
-#' @return xcv_x1: Canonical variable for the slope for x
-#' @return xcv_y0: Canonical variable for the intercept for y
-#' @return xcv_y1: Canonical variable for the slope for y
+#' @return xcv_x0: Longitudinal Canonical vector for the intercept for x
+#' @return xcv_x1: Longitudinal Canonical vector for the slope for x
+#' @return xcv_y0: Longitudinal Canonical vector for the intercept for y
+#' @return xcv_y1: Longitudinal Canonical vector for the slope for y
 #'
 #' @export
 #'
