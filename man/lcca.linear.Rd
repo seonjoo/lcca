@@ -4,7 +4,14 @@
 \alias{lcca.linear}
 \title{Longitudial canonical correlation analysis}
 \usage{
-lcca.linear(x, y, varthresh = 0.95, projectthresh = 1, method = "Wilks")
+lcca.linear(
+  x,
+  y,
+  varthresh = 0.95,
+  projectthresh = 1,
+  method = "Wilks",
+  verbose = FALSE
+)
 }
 \arguments{
 \item{x}{object for input list(x, time, J, I, visit)}
@@ -13,6 +20,8 @@ lcca.linear(x, y, varthresh = 0.95, projectthresh = 1, method = "Wilks")
 
 \item{method}{(defualt='Wilks') test statistic to be used. "Wilks","Hotelling", "Pillai", or "Roy".}
 
+\item{verbose}{(default=FALSE) print all details}
+
 \item{varthreshold}{(default=0.95) threshold to detemined the number of components of lpcs.}
 
 \item{timeadjust}{(defult=FALSE)}
@@ -20,13 +29,13 @@ lcca.linear(x, y, varthresh = 0.95, projectthresh = 1, method = "Wilks")
 \value{
 ccor
 
-xcv_x0: Canonical variable for the intercept for x
+xcv_x0: Longitudinal Canonical vector for the intercept for x
 
-xcv_x1: Canonical variable for the slope for x
+xcv_x1: Longitudinal Canonical vector for the slope for x
 
-xcv_y0: Canonical variable for the intercept for y
+xcv_y0: Longitudinal Canonical vector for the intercept for y
 
-xcv_y1: Canonical variable for the slope for y
+xcv_y1: Longitudinal Canonical vector for the slope for y
 }
 \description{
 Current version is implemented for only the linear trajectory.
@@ -69,7 +78,10 @@ phiyw = matrix(0,V.y,3); phiyw[1:9 + 9*6, 1]<-.1; phiyw[1:9 + 9*7, 2]<-.1; phiyw
 zeta.Y = t(matrix(rnorm(K.Y*3), ncol=K.Y)*c(8,4,2))*2
 xi.Y = xi[,4:6]
 Y = phiy0 \%*\% t(xi.Y[rep(1:I, visit.Y),]) + phiy1 \%*\% t(time.Y * xi.Y[rep(1:I, visit.Y),]) + phiyw \%*\% t(zeta.Y) + matrix(rnorm(V.y*K.Y ,0, .1), V.y, K.Y)
+
 x = list(X=X, time=time.X, I=I, J=sum(visit.X),visit=visit.X)
 y = list(X=Y, time=time.Y, I=I, J=sum(visit.Y),visit=visit.Y)
-lcca.linear(x=x,y=y)
+re = lcca.linear(x=x,y=y)
+re
+
 }

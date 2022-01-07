@@ -54,7 +54,14 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">lcca.linear</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, varthresh <span class="op">=</span> <span class="fl">0.95</span>, projectthresh <span class="op">=</span> <span class="fl">1</span>, method <span class="op">=</span> <span class="st">"Wilks"</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">lcca.linear</span><span class="op">(</span>
+  <span class="va">x</span>,
+  <span class="va">y</span>,
+  varthresh <span class="op">=</span> <span class="fl">0.95</span>,
+  projectthresh <span class="op">=</span> <span class="fl">1</span>,
+  method <span class="op">=</span> <span class="st">"Wilks"</span>,
+  verbose <span class="op">=</span> <span class="cn">FALSE</span>
+<span class="op">)</span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -65,6 +72,8 @@
 <dd><p>(default=1) threshold for the dimension reduction projection in lfpca.</p></dd>
 <dt>method</dt>
 <dd><p>(defualt='Wilks') test statistic to be used. "Wilks","Hotelling", "Pillai", or "Roy".</p></dd>
+<dt>verbose</dt>
+<dd><p>(default=FALSE) print all details</p></dd>
 <dt>varthreshold</dt>
 <dd><p>(default=0.95) threshold to detemined the number of components of lpcs.</p></dd>
 <dt>timeadjust</dt>
@@ -73,10 +82,10 @@
     <div id="value">
     <h2>Value</h2>
     <p>ccor
-xcv_x0: Canonical variable for the intercept for x
-xcv_x1: Canonical variable for the slope for x
-xcv_y0: Canonical variable for the intercept for y
-xcv_y1: Canonical variable for the slope for y</p>
+xcv_x0: Longitudinal Canonical vector for the intercept for x
+xcv_x1: Longitudinal Canonical vector for the slope for x
+xcv_y0: Longitudinal Canonical vector for the intercept for y
+xcv_y1: Longitudinal Canonical vector for the slope for y</p>
     </div>
 
     <div id="ref-examples">
@@ -118,15 +127,17 @@ xcv_y1: Canonical variable for the slope for y</p>
 <span class="r-in"><span class="va">zeta.Y</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="va">K.Y</span><span class="op">*</span><span class="fl">3</span><span class="op">)</span>, ncol<span class="op">=</span><span class="va">K.Y</span><span class="op">)</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">8</span>,<span class="fl">4</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">*</span><span class="fl">2</span></span>
 <span class="r-in"><span class="va">xi.Y</span> <span class="op">=</span> <span class="va">xi</span><span class="op">[</span>,<span class="fl">4</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span></span>
 <span class="r-in"><span class="va">Y</span> <span class="op">=</span> <span class="va">phiy0</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="va">xi.Y</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="va">I</span>, <span class="va">visit.Y</span><span class="op">)</span>,<span class="op">]</span><span class="op">)</span> <span class="op">+</span> <span class="va">phiy1</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="va">time.Y</span> <span class="op">*</span> <span class="va">xi.Y</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="va">I</span>, <span class="va">visit.Y</span><span class="op">)</span>,<span class="op">]</span><span class="op">)</span> <span class="op">+</span> <span class="va">phiyw</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="va">zeta.Y</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="va">V.y</span><span class="op">*</span><span class="va">K.Y</span> ,<span class="fl">0</span>, <span class="fl">.1</span><span class="op">)</span>, <span class="va">V.y</span>, <span class="va">K.Y</span><span class="op">)</span></span>
+<span class="r-in"></span>
 <span class="r-in"><span class="va">x</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>X<span class="op">=</span><span class="va">X</span>, time<span class="op">=</span><span class="va">time.X</span>, I<span class="op">=</span><span class="va">I</span>, J<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">visit.X</span><span class="op">)</span>,visit<span class="op">=</span><span class="va">visit.X</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">y</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>X<span class="op">=</span><span class="va">Y</span>, time<span class="op">=</span><span class="va">time.Y</span>, I<span class="op">=</span><span class="va">I</span>, J<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">visit.Y</span><span class="op">)</span>,visit<span class="op">=</span><span class="va">visit.Y</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">lcca.linear</span><span class="op">(</span>x<span class="op">=</span><span class="va">x</span>,y<span class="op">=</span><span class="va">y</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">re</span> <span class="op">=</span> <span class="fu">lcca.linear</span><span class="op">(</span>x<span class="op">=</span><span class="va">x</span>,y<span class="op">=</span><span class="va">y</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Wilks' Lambda, using F-approximation (Rao's F):</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>               stat      approx df1      df2      p.value</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1 to 4:  0.3635147 6.913769391  16 281.7023 2.345901e-13</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2 to 4:  0.9176709 0.904261906   9 226.4882 5.222746e-01</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3 to 4:  0.9749770 0.599311064   4 188.0000 6.635830e-01</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4 to 4:  0.9999414 0.005566361   1  95.0000 9.406834e-01</span>
+<span class="r-in"><span class="va">re</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $tests</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $tests$id</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Wilks"</span>
@@ -661,6 +672,7 @@ xcv_y1: Canonical variable for the slope for y</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [97]  1.02689410 -0.49406672 -0.45081650 -2.14385211</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"></span>
 </code></pre></div>
     </div>
   </div>

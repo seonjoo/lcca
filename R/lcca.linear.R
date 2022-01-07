@@ -55,10 +55,15 @@
 #' zeta.Y = t(matrix(rnorm(K.Y*3), ncol=K.Y)*c(8,4,2))*2
 #' xi.Y = xi[,4:6]
 #' Y = phiy0 %*% t(xi.Y[rep(1:I, visit.Y),]) + phiy1 %*% t(time.Y * xi.Y[rep(1:I, visit.Y),]) + phiyw %*% t(zeta.Y) + matrix(rnorm(V.y*K.Y ,0, .1), V.y, K.Y)
+#'
 #' x = list(X=X, time=time.X, I=I, J=sum(visit.X),visit=visit.X)
 #' y = list(X=Y, time=time.Y, I=I, J=sum(visit.Y),visit=visit.Y)
-#' lcca.linear(x=x,y=y)
-#' @import MASS, CCP, CCA
+#' re = lcca.linear(x=x,y=y)
+#' re
+#'
+#' @import MASS
+#' @import CCP
+#' @import CCA
 
 lcca.linear<-function(x,y,
                varthresh=0.95,

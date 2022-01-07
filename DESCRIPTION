@@ -10,14 +10,13 @@ Encoding: UTF-8
 LazyData: true
 Depends:
     CCA,
-    CCP
-Imports:
+    CCP,
     MASS
 Suggests:
     testthat (>= 3.0.0),
     dplyr,
     knitr,
     rmarkdown
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.2
 VignetteBuilder: knitr
 Config/testthat/edition: 3

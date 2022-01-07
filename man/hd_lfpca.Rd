@@ -72,8 +72,7 @@ phiw = matrix(0,V,3);phiw[1:50+300,1]<-.1;phiw[1:50 + 350,2]<-.1;phiw[1:50 + 400
 xi = t(matrix(rnorm(I*3),ncol=I)*c(8,4,2))*3
 zeta = t(matrix(rnorm(J*3),ncol=J)*c(8,4,2))*2
 Y = phix0\%*\% t(xi[rep(1:I, visit),]) + phix1\%*\% t(time * xi[rep(1:I, visit),]) + phiw \%*\% t(zeta) + matrix(rnorm(V*J,0,.1),V,J)
-library(Lpredict)
-re<-hd_lfpca(Y,T=scale(time,center=TRUE,scale=TRUE),J=J,I=I,visit=visit, varthresh=0.95, projectthresh=1,timeadjust=FALSE,figure=TRUE)
+re<-hd_lfpca(Y,T=scale(time,center=TRUE,scale=TRUE),J=J,I=I,visit=visit, varthresh=0.95, projectthresh=1,timeadjust=FALSE)
 cor(phix0, re$phix0)
 cor(phix1, re$phix1)
 library(gplots)
