@@ -1,7 +1,7 @@
 Package: lcca
 Type: Package
 Title: What the Package Does (Title Case)
-Version: 1.0.0
+Version: 2.0.0
 Author: Seonjoo Lee, Jongwoo Choi
 Maintainer: Seonjoo Lee <seonjoo.lee@nyspi.columbia.edu>
 Description: Conduct longitudinal cannonical correlation analysis
@@ -11,12 +11,13 @@ LazyData: true
 Depends:
     CCA,
     CCP,
-    MASS
+    MASS,
+    parallel
 Suggests:
     testthat (>= 3.0.0),
     dplyr,
     knitr,
     rmarkdown
-RoxygenNote: 7.1.2
+RoxygenNote: 7.3.1
 VignetteBuilder: knitr
 Config/testthat/edition: 3
