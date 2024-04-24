@@ -119,7 +119,7 @@ hd_lfpca= function(Y,T,J,I,visit, verbose=FALSE, prefix=date(), Nx = NA,Nw = NA,
 	if(verbose==TRUE){print("Estimate Covariance Functions")}
 
 #system.time(beta<- Yvec %*% X %*% chol2inv(chol(t(X)%*%X)))
-beta <- Yvec %*% X %*%solve(t(X)%*%X)
+beta <- Yvec %*% X %*%ginv(t(X)%*%X)
 #sum((beta-beta2)^2)
 K00 = matrix(beta[,1],J_projected,J_projected)
 K01 = matrix(beta[,2],J_projected,J_projected)
